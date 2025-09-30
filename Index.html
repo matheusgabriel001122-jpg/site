@@ -3,271 +3,314 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Bar Preto & Branco</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <title>Loja de Bar — Soma de Consumo</title>
   <style>
     :root{
       --bg:#0b0b0b;
-      --panel:#111;
-      --muted:#bfbfbf;
-      --accent:#fff;
+      --card:#141414;
+      --muted:#bdbdbd;
+      --accent:#ffd166;
       --glass: rgba(255,255,255,0.03);
-      --glass-2: rgba(255,255,255,0.02);
-      --radius:14px;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
     body{
       margin:0;
-      min-height:100vh;
-      background:linear-gradient(180deg,var(--bg),#070707 60%);
-      color:var(--accent);
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background:linear-gradient(180deg,var(--bg),#080808);
+      color:#fff;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
-      padding:28px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .container{
-      width:100%;
-      max-width:1100px;
-      display:grid;
-      grid-template-columns: 1fr 380px;
-      gap:24px;
-      align-items:start;
+      padding:20px;
     }
 
     header{
-      grid-column:1 / -1;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:6px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;
     }
     .brand{
-      display:flex;align-items:center;gap:14px
+      display:flex;gap:12px;align-items:center
     }
-    .logo{
-      width:62px;height:62px;border-radius:12px;background:linear-gradient(135deg,#111,#1a1a1a);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;color:var(--accent);box-shadow:0 6px 18px rgba(0,0,0,0.6) inset;
-    }
-    h1{margin:0;font-size:20px;letter-spacing:0.6px}
-    p.subtitle{margin:0;color:var(--muted);font-size:13px}
+    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#222,#111);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:18px}
+    h1{margin:0;font-size:20px}
+    p.lead{margin:0;color:var(--muted);font-size:13px}
 
-    .search{
-      display:flex;gap:8px;align-items:center;background:var(--panel);padding:8px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);
-      box-shadow:0 8px 30px rgba(0,0,0,0.7);
-    }
-    .search input{background:transparent;border:0;outline:none;color:var(--accent);width:220px}
+    main{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start}
 
-    .menu{
-      background:linear-gradient(180deg,var(--panel),#0c0c0c);
-      border-radius:var(--radius);
-      padding:18px;
-      box-shadow:0 6px 30px rgba(0,0,0,0.6);
-    }
+    /* left: produtos */
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+    .tab{background:var(--glass);padding:8px 12px;border-radius:999px;cursor:pointer;color:var(--muted);font-size:14px}
+    .tab.active{background:linear-gradient(90deg,#222,#1a1a1a);color:#fff;box-shadow:0 4px 18px rgba(0,0,0,0.6)}
 
-    .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-
-    .card{
-      background:var(--glass);
-      border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.03);
-      display:flex;flex-direction:column;gap:8px;min-height:110px;justify-content:space-between;transition:transform .18s ease, box-shadow .18s ease;
-    }
-    .card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,0.6)}
-
-    .meta{display:flex;align-items:center;justify-content:space-between}
-    .meta .name{font-weight:600}
+    .products{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .product{background:var(--card);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
+    .product .top{display:flex;gap:12px;align-items:center}
+    .thumb{width:64px;height:64px;border-radius:8px;background:#111;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px}
+    .meta{flex:1}
+    .meta h3{margin:0;font-size:15px}
+    .meta p{margin:0;color:var(--muted);font-size:13px}
     .price{font-weight:700}
 
-    .controls{display:flex;align-items:center;gap:8px}
-    button.btn{
-      background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:10px;color:var(--accent);cursor:pointer;font-weight:600;
-    }
-    .qty{min-width:46px;text-align:center;padding:6px 8px;border-radius:10px;background:var(--glass-2);border:1px solid rgba(255,255,255,0.02)}
+    .actions{display:flex;align-items:center;gap:8px}
+    .qty-btn{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,0.05);background:transparent;color:#fff;cursor:pointer}
+    .qty{min-width:36px;text-align:center}
 
-    /* sidebar */
-    .sidebar{
-      background:linear-gradient(180deg,#0d0d0d,#0a0a0a);
-      border-radius:var(--radius);padding:18px;position:sticky;top:28px;height:fit-content;box-shadow:0 12px 40px rgba(0,0,0,0.6)
-    }
-    .sidebar h3{margin:0;font-size:16px}
-    .totals{margin-top:12px;border-radius:12px;padding:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.03)}
-    .line{display:flex;justify-content:space-between;align-items:center;margin:8px 0}
-
-    .actions{display:flex;gap:8px;margin-top:12px}
-    .primary{background:transparent;border:1px solid var(--accent);padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:700}
-    .ghost{background:transparent;border:1px dashed rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;cursor:pointer}
-
-    footer{grid-column:1 / -1;margin-top:12px;text-align:center;color:var(--muted);font-size:13px}
+    /* right: resumo */
+    .cart{background:linear-gradient(180deg,#0f0f0f,#0b0b0b);padding:16px;border-radius:14px;position:sticky;top:20px}
+    .cart h2{margin:0 0 8px 0}
+    .cart-list{max-height:320px;overflow:auto;margin-bottom:12px}
+    .cart-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.03)}
+    .cart-item small{color:var(--muted)}
+    .totals{display:flex;justify-content:space-between;font-weight:700;margin-bottom:12px}
+    .cart-actions{display:flex;gap:8px}
+    button.btn{flex:1;padding:10px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+    .btn.clear{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+    .btn.checkout{background:var(--accent);color:#000}
 
     /* modal */
-    .modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-    .modal-content {
-      background: #111;
-      padding: 20px;
-      border-radius: 12px;
-      text-align: center;
-      max-width: 400px;
-      width: 90%;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-    }
-    .modal-content img {
-      max-width: 100%;
-      border-radius: 10px;
-      margin: 12px 0;
-    }
-    .close {
-      background: transparent;
-      border: 0;
-      color: var(--muted);
-      font-size: 20px;
-      cursor: pointer;
-      float: right;
-    }
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:40}
+    .modal.show{display:flex}
+    .modal-card{background:#0e0e0e;padding:20px;border-radius:12px;max-width:420px;width:96%;text-align:center}
+    .modal-card img{max-width:260px;display:block;margin:12px auto}
+    .modal-card .close{margin-top:12px;padding:8px 12px;border-radius:8px;border:0;background:#222;color:#fff}
 
-    @media (max-width:880px){
-      .container{grid-template-columns:1fr;}
-      .sidebar{position:relative;top:auto}
-      .menu-grid{grid-template-columns:repeat(1,1fr)}
+    /* footer */
+    footer{margin-top:18px;color:var(--muted);font-size:13px}
+
+    /* responsive */
+    @media(max-width:900px){
+      main{grid-template-columns:1fr}
+      .products{grid-template-columns:repeat(1,1fr)}
+      .cart{position:relative}
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="brand">
-        <div class="logo">BB</div>
-        <div>
-          <h1>Bar Preto & Branco</h1>
-          <p class="subtitle">Cardápio rápido — clique nos + para adicionar</p>
+  <header>
+    <div class="brand">
+      <div class="logo">BAR</div>
+      <div>
+        <h1>Loja do Bar — Soma de Consumo</h1>
+        <p class="lead">Adicione itens, salve entre sessões e finalize via PIX</p>
+      </div>
+    </div>
+    <div>
+      <small style="color:var(--muted)">Tema: Preto • Persistência: localStorage</small>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="controls" id="categoryTabs"></div>
+      <div class="products" id="productsGrid"></div>
+    </section>
+
+    <aside>
+      <div class="cart">
+        <h2>Resumo</h2>
+        <div class="cart-list" id="cartList"></div>
+        <div class="totals">
+          <div>Total</div>
+          <div id="totalAmount">R$ 0,00</div>
+        </div>
+        <div class="cart-actions">
+          <button class="btn clear" id="clearBtn">Limpar</button>
+          <button class="btn checkout" id="checkoutBtn">Finalizar Compra</button>
         </div>
       </div>
-      <div class="search">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="opacity:.7"><path d="M21 21l-4.35-4.35" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="11" cy="11" r="6" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
-        <input id="search" placeholder="Pesquisar produto..." />
-      </div>
-    </header>
-
-    <main class="menu">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <h2 style="margin:0">Cardápio</h2>
-        <div style="color:var(--muted);font-size:13px">Preços em R$</div>
-      </div>
-      <div class="menu-grid" id="products"></div>
-      <footer>Toque nos produtos para ver quantidade. Os dados são salvos no navegador (localStorage).</footer>
-    </main>
-
-    <aside class="sidebar">
-      <h3>Resumo do Pedido</h3>
-      <div class="totals" id="cart">
-        <div class="line"><div style="color:var(--muted)">Itens</div><div id="cart-count">0</div></div>
-        <div class="line"><div style="color:var(--muted)">Total</div><div id="cart-total">R$ 0,00</div></div>
-        <div class="line"><div style="color:var(--muted)">Desconto</div><div id="cart-discount">R$ 0,00</div></div>
-      </div>
-      <div class="actions">
-        <button class="primary" id="checkout">Finalizar</button>
-        <button class="ghost" id="clear">Limpar</button>
-      </div>
-      <div style="margin-top:12px;color:var(--muted);font-size:13px">
-        O carrinho é salvo automaticamente no seu navegador para que os valores persistam ao fechar a aba.
-      </div>
     </aside>
-  </div>
+  </main>
 
+  <footer>
+    <small>Coloque o arquivo <code>qrcode-pix.png</code> na mesma pasta do HTML para que o QR apareça ao finalizar a compra.</small>
+  </footer>
+
+  <!-- modal PIX -->
   <div class="modal" id="pixModal">
-    <div class="modal-content">
-      <button class="close" id="closeModal">×</button>
-      <h3>Pagamento via Pix</h3>
-      <p>Escaneie o QR Code abaixo para pagar:</p>
-      <img src="qrcode-pix.png" alt="QR Code Pix">
-      <p><strong>Total: <span id="pixTotal">R$ 0,00</span></strong></p>
+    <div class="modal-card">
+      <h3>Escaneie para pagar (PIX)</h3>
+      <p id="pixValue" style="margin:0;color:var(--muted)"></p>
+      <img id="pixImg" src="qrcode-pix.png" alt="QR Code PIX" onerror="this.style.display='none'">
+      <p style="color:var(--muted);font-size:13px">Ou copie o valor e pague manualmente.</p>
+      <button class="close" id="closeModalBtn">Fechar</button>
     </div>
   </div>
 
   <script>
+    // Produtos exemplo (edite conforme precisar)
     const PRODUCTS = [
-      { id:'bala', name:'Bala', price:0.50 },
-      { id:'picole', name:'Picolé', price:1.00 },
-      { id:'esquine', name:'Esquiné', price:2.50 },
-      { id:'esquine_grande', name:'Esquiné Grande', price:4.00 },
-      { id:'pirulito', name:'Pirulito', price:0.50 }
+      {id:'b1', category:'Bebidas', name:'Cerveja Lata', price:6.5},
+      {id:'b2', category:'Bebidas', name:'Refrigerante 350ml', price:5.0},
+      {id:'b3', category:'Bebidas', name:'Caipirinha (copos)', price:12.0},
+      {id:'p1', category:'Petiscos', name:'Batata Frita', price:14.0},
+      {id:'p2', category:'Petiscos', name:'Amendoim', price:6.0},
+      {id:'s1', category:'Sinuca', name:'Mesa (1 hora)', price:20.0},
+      {id:'s2', category:'Sinuca', name:'Tacada extra', price:3.5}
     ];
 
-    let cart = {};
-    const $products = document.getElementById('products');
-    const $total = document.getElementById('cart-total');
-    const $count = document.getElementById('cart-count');
+    // Keys
+    const LS_KEY = 'loja_bar_cart_v1';
 
-    function currency(num){return num.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});}
+    // Estado
+    let cart = loadCart();
+    let currentCategory = 'Todos';
 
-    function save(){localStorage.setItem('bb_cart_v1', JSON.stringify(cart));}
-    function load(){try{const raw = localStorage.getItem('bb_cart_v1'); if(raw) cart = JSON.parse(raw);}catch(e){cart={}}}
+    // DOM refs
+    const productsGrid = document.getElementById('productsGrid');
+    const categoryTabs = document.getElementById('categoryTabs');
+    const cartList = document.getElementById('cartList');
+    const totalAmount = document.getElementById('totalAmount');
+    const clearBtn = document.getElementById('clearBtn');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    const pixModal = document.getElementById('pixModal');
+    const pixValue = document.getElementById('pixValue');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const pixImg = document.getElementById('pixImg');
 
-    function renderProducts(filter=''){
-      $products.innerHTML='';
-      const term=filter.trim().toLowerCase();
-      PRODUCTS.filter(p=>p.name.toLowerCase().includes(term)).forEach(p=>{
-        const qty=cart[p.id]||0;
-        const card=document.createElement('div');
-        card.className='card';
-        card.innerHTML=`<div><div class="meta"><div class="name">${p.name}</div><div class="price">${currency(p.price)}</div></div></div><div style="display:flex;justify-content:space-between;align-items:center"><div class="controls"><button class="btn dec" data-id="${p.id}">−</button><div class="qty" data-id="${p.id}">${qty}</div><button class="btn inc" data-id="${p.id}">+</button></div><div style="text-align:right;color:var(--muted);font-size:13px">Subtotal<br><strong id="sub-${p.id}">${currency(qty*p.price)}</strong></div></div>`;
-        $products.appendChild(card);
+    // Inicializar
+    renderCategories();
+    renderProducts();
+    renderCart();
+
+    // --- persistence ---
+    function saveCart(){
+      try{ localStorage.setItem(LS_KEY, JSON.stringify(cart)); }catch(e){console.warn('Erro ao salvar localStorage', e)}
+    }
+    function loadCart(){
+      try{
+        const raw = localStorage.getItem(LS_KEY);
+        return raw ? JSON.parse(raw) : {};
+      }catch(e){return {}};
+    }
+
+    // --- render categorias ---
+    function renderCategories(){
+      const cats = ['Todos', ...Array.from(new Set(PRODUCTS.map(p=>p.category)))];
+      categoryTabs.innerHTML='';
+      cats.forEach(cat=>{
+        const btn = document.createElement('button');
+        btn.className = 'tab' + (cat===currentCategory ? ' active' : '');
+        btn.textContent = cat;
+        btn.onclick = ()=>{ currentCategory = cat; document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); btn.classList.add('active'); renderProducts(); };
+        categoryTabs.appendChild(btn);
       });
     }
 
-    function updateUI(){
-      let items=0, total=0;
-      for(const id in cart){
-        const qty=cart[id];
-        const product=PRODUCTS.find(p=>p.id===id);
-        if(!product) continue;
-        items+=qty;
-        total+=qty*product.price;
-        const sub=document.getElementById('sub-'+id);
-        const qtyEl=document.querySelector('.qty[data-id="'+id+'"]');
-        if(sub) sub.textContent=currency(qty*product.price);
-        if(qtyEl) qtyEl.textContent=qty;
-      }
-      $count.textContent=items;
-      $total.textContent=currency(total);
-      document.getElementById('cart-discount').textContent=currency(0);
-      save();
+    // --- render produtos ---
+    function renderProducts(){
+      const filtered = currentCategory === 'Todos' ? PRODUCTS : PRODUCTS.filter(p=>p.category===currentCategory);
+      productsGrid.innerHTML = '';
+      filtered.forEach(p=>{
+        const el = document.createElement('div'); el.className='product';
+        el.innerHTML = `
+          <div class="top">
+            <div class="thumb">${p.name.split(' ').slice(0,2).map(w=>w[0]).join('')}</div>
+            <div class="meta">
+              <h3>${p.name}</h3>
+              <p class="price">${formatCurrency(p.price)}</p>
+              <small style="color:var(--muted)">${p.category}</small>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div class="actions">
+              <button class="qty-btn" data-action="decrease" data-id="${p.id}">−</button>
+              <div class="qty" id="qty-${p.id}">${cart[p.id]||0}</div>
+              <button class="qty-btn" data-action="increase" data-id="${p.id}">+</button>
+            </div>
+            <div style="font-size:13px;color:var(--muted)">unit</div>
+          </div>
+        `;
+        productsGrid.appendChild(el);
+      });
+
+      // add listeners
+      document.querySelectorAll('.qty-btn').forEach(b=>{
+        b.addEventListener('click', (e)=>{
+          const id = e.currentTarget.dataset.id;
+          const act = e.currentTarget.dataset.action;
+          changeQty(id, act === 'increase' ? 1 : -1);
+        });
+      });
     }
 
-    document.addEventListener('click', e=>{
-      const inc=e.target.closest('.inc');
-      const dec=e.target.closest('.dec');
-      if(inc){const id=inc.dataset.id; cart[id]=(cart[id]||0)+1; updateUI();}
-      if(dec){const id=dec.dataset.id; cart[id]=Math.max(0,(cart[id]||0)-1); updateUI();}
+    function changeQty(id, delta){
+      const current = cart[id] || 0;
+      const next = Math.max(0, current + delta);
+      if(next === 0) delete cart[id]; else cart[id] = next;
+      const qtyEl = document.getElementById('qty-'+id);
+      if(qtyEl) qtyEl.textContent = cart[id]||0;
+      saveCart();
+      renderCart();
+    }
+
+    // --- render carrinho ---
+    function renderCart(){
+      cartList.innerHTML = '';
+      const items = Object.keys(cart).map(id=>{
+        const prod = PRODUCTS.find(p=>p.id===id);
+        return {id, product:prod, qty:cart[id]};
+      }).filter(i=>i.product);
+
+      if(items.length===0){ cartList.innerHTML = '<p style="color:var(--muted)">Carrinho vazio</p>'; }
+      items.forEach(it=>{
+        const row = document.createElement('div'); row.className='cart-item';
+        const name = document.createElement('div'); name.innerHTML = `<div>${it.product.name}</div><small>${it.qty} x ${formatCurrency(it.product.price)}</small>`;
+        const right = document.createElement('div'); right.innerHTML = `<div>${formatCurrency(it.qty * it.product.price)}</div>`;
+        row.appendChild(name); row.appendChild(right);
+        cartList.appendChild(row);
+      });
+
+      const total = items.reduce((s,i)=>s + i.qty * i.product.price, 0);
+      totalAmount.textContent = formatCurrency(total);
+    }
+
+    // formato BRL
+    function formatCurrency(v){
+      return new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v);
+    }
+
+    // limpar carrinho
+    clearBtn.addEventListener('click', ()=>{
+      if(confirm('Deseja limpar todo o carrinho?')){
+        cart = {};
+        saveCart();
+        renderProducts();
+        renderCart();
+      }
     });
 
-    document.getElementById('clear').addEventListener('click',()=>{if(confirm('Limpar carrinho?')){cart={}; save(); renderProducts(document.getElementById('search').value); updateUI();}});
-
-    document.getElementById('checkout').addEventListener('click',()=>{
-      const items=Object.values(cart).reduce((s,n)=>s+n,0);
-      const total=Object.entries(cart).reduce((s,[id,n])=>{const p=PRODUCTS.find(x=>x.id===id); return s+(p?p.price*n:0);},0);
-      if(items===0){alert('Carrinho vazio. Adicione produtos antes de finalizar.'); return;}
-      document.getElementById('pixTotal').textContent=currency(total);
-      document.getElementById('pixModal').style.display='flex';
+    // finalizar compra
+    checkoutBtn.addEventListener('click', ()=>{
+      const total = Object.keys(cart).reduce((s,id)=>{
+        const p = PRODUCTS.find(x=>x.id===id); return s + (p ? p.price * cart[id] : 0);
+      },0);
+      if(total <= 0){ alert('Seu carrinho está vazio.'); return; }
+      pixValue.textContent = formatCurrency(total);
+      // show modal
+      pixModal.classList.add('show');
+      // try to show image — image is expected at qrcode-pix.png
+      // If user wants dynamic qr generation, deve integrar API externa ou biblioteca.
     });
 
-    document.getElementById('closeModal').addEventListener('click',()=>{document.getElementById('pixModal').style.display='none';});
-    document.getElementById('search').addEventListener('input', e=>{renderProducts(e.target.value); updateUI();});
+    closeModalBtn.addEventListener('click', ()=>{ pixModal.classList.remove('show'); });
 
-    load(); renderProducts(); updateUI();
+    // fechar modal com ESC ou clique no overlay
+    pixModal.addEventListener('click', (e)=>{ if(e.target===pixModal) pixModal.classList.remove('show'); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') pixModal.classList.remove('show'); });
+
+    // -- útil: permite alterar produtos facilmente no topo PRODUCTS array --
+
+    // Export/Import simples (opcional) — copia o JSON do carrinho
+    // (voce pode remover essas funções se nao quiser)
+    function exportCart(){ return JSON.stringify(cart); }
+    function importCart(json){ try{ cart = JSON.parse(json)||{}; saveCart(); renderProducts(); renderCart(); }catch(e){alert('JSON inválido')} }
+
+    // Permitir clicar no total para copiar valor
+    totalAmount.addEventListener('click', ()=>{
+      const text = totalAmount.textContent || '';
+      navigator.clipboard?.writeText(text).then(()=>{
+        alert('Total copiado: ' + text);
+      }).catch(()=>{});
+    });
+
   </script>
 </body>
 </html>
