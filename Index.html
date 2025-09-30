@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>Loja de Bar — Soma de Consumo</title>
+  <title>AgroBar — Soma de Consumo</title>
   <style>
     :root{
       --bg:#0b0b0b;
@@ -31,6 +31,13 @@
     p.lead{color:var(--muted);font-size:12px}
 
     main{display:flex;flex-direction:column;gap:14px}
+
+    /* barra de pesquisa */
+    .search-box{margin:8px 0;}
+    .search-box input{
+      width:100%;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);
+      background:#111;color:#fff;font-size:14px;
+    }
 
     /* categorias */
     .controls{display:flex;gap:6px;flex-wrap:wrap;overflow-x:auto;padding-bottom:6px}
@@ -86,6 +93,9 @@
 
   <main>
     <section>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="🔍 Buscar produto...">
+      </div>
       <div class="controls" id="categoryTabs"></div>
       <div class="products" id="productsGrid"></div>
     </section>
@@ -122,18 +132,20 @@
 
   <script>
     const PRODUCTS = [
-      {id:'b1', category:'Bebidas', name:'Cerveja Lata', price:6.5},
-      {id:'b2', category:'Bebidas', name:'Refrigerante 350ml', price:5.0},
-      {id:'b3', category:'Bebidas', name:'Caipirinha', price:12.0},
-      {id:'p1', category:'Petiscos', name:'Batata Frita', price:14.0},
-      {id:'p2', category:'Petiscos', name:'Amendoim', price:6.0},
-      {id:'s1', category:'Sinuca', name:'Mesa (1h)', price:20.0},
-      {id:'s2', category:'Sinuca', name:'Tacada extra', price:3.5}
+      {id:'b1', category:'Bebidas', name:'Cerveja Lata', price:5},
+      {id:'b2', category:'Bebidas', name:'Refrigerante Lata', price:5.0},
+      {id:'b3', category:'Bebidas', name:'Refrigerante Grande', price:11.0},
+      {id:'b4', category:'Bebidas', name:'La Frut 200ml', price:3.50},
+      {id:'b5', category:'Bebidas', name:'Para Tudo', price:7.0},
+      {id:'p1', category:'Petiscos', name:'Esquine', price:14.0},
+      {id:'p2', category:'Petiscos', name:'Amendoim', price:3.0},
+      {id:'s1', category:'Sinuca', name:'Sinuca Ficha', price:2},
     ];
 
     const LS_KEY = 'loja_bar_cart_v1';
     let cart = loadCart();
     let currentCategory = 'Todos';
+    let searchQuery = '';
 
     const productsGrid = document.getElementById('productsGrid');
     const categoryTabs = document.getElementById('categoryTabs');
@@ -144,6 +156,7 @@
     const pixModal = document.getElementById('pixModal');
     const pixValue = document.getElementById('pixValue');
     const closeModalBtn = document.getElementById('closeModalBtn');
+    const searchInput = document.getElementById('searchInput');
 
     renderCategories();
     renderProducts();
@@ -165,8 +178,17 @@
     }
 
     function renderProducts(){
-      const filtered = currentCategory === 'Todos' ? PRODUCTS : PRODUCTS.filter(p=>p.category===currentCategory);
+      let filtered = currentCategory === 'Todos' ? PRODUCTS : PRODUCTS.filter(p=>p.category===currentCategory);
+      if(searchQuery.trim()!==''){
+        filtered = filtered.filter(p=>p.name.toLowerCase().includes(searchQuery.toLowerCase()));
+      }
+
       productsGrid.innerHTML = '';
+      if(filtered.length===0){
+        productsGrid.innerHTML = '<p style="color:var(--muted)">Nenhum produto encontrado.</p>';
+        return;
+      }
+
       filtered.forEach(p=>{
         const el = document.createElement('div'); el.className='product';
         el.innerHTML = `
@@ -248,7 +270,11 @@
     closeModalBtn.addEventListener('click', ()=>{ pixModal.classList.remove('show'); });
     pixModal.addEventListener('click', (e)=>{ if(e.target===pixModal) pixModal.classList.remove('show'); });
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') pixModal.classList.remove('show'); });
+
+    searchInput.addEventListener('input', (e)=>{
+      searchQuery = e.target.value;
+      renderProducts();
+    });
   </script>
 </body>
 </html>
-
