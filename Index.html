@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>Loja de Bar — Soma de Consumo</title>
   <style>
     :root{
@@ -12,75 +12,65 @@
       --accent:#ffd166;
       --glass: rgba(255,255,255,0.03);
     }
-    *{box-sizing:border-box}
+    *{box-sizing:border-box;margin:0;padding:0}
     body{
-      margin:0;
       font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
       background:linear-gradient(180deg,var(--bg),#080808);
       color:#fff;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
-      padding:20px;
+      padding:12px;
     }
 
     header{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;
+      display:flex;flex-direction:column;gap:8px;margin-bottom:14px;
     }
-    .brand{
-      display:flex;gap:12px;align-items:center
-    }
-    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#222,#111);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:18px}
-    h1{margin:0;font-size:20px}
-    p.lead{margin:0;color:var(--muted);font-size:13px}
+    .brand{display:flex;gap:10px;align-items:center}
+    .logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,#222,#111);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:16px}
+    h1{font-size:18px;line-height:1.2}
+    p.lead{color:var(--muted);font-size:12px}
 
-    main{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start}
+    main{display:flex;flex-direction:column;gap:14px}
 
-    /* left: produtos */
-    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-    .tab{background:var(--glass);padding:8px 12px;border-radius:999px;cursor:pointer;color:var(--muted);font-size:14px}
-    .tab.active{background:linear-gradient(90deg,#222,#1a1a1a);color:#fff;box-shadow:0 4px 18px rgba(0,0,0,0.6)}
+    /* categorias */
+    .controls{display:flex;gap:6px;flex-wrap:wrap;overflow-x:auto;padding-bottom:6px}
+    .tab{background:var(--glass);padding:6px 10px;border-radius:999px;cursor:pointer;color:var(--muted);font-size:13px;flex-shrink:0;white-space:nowrap}
+    .tab.active{background:linear-gradient(90deg,#222,#1a1a1a);color:#fff;box-shadow:0 3px 10px rgba(0,0,0,0.5)}
 
-    .products{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    .product{background:var(--card);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
-    .product .top{display:flex;gap:12px;align-items:center}
-    .thumb{width:64px;height:64px;border-radius:8px;background:#111;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px}
+    /* produtos */
+    .products{display:grid;grid-template-columns:1fr;gap:10px}
+    .product{background:var(--card);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px}
+    .top{display:flex;gap:10px;align-items:center}
+    .thumb{width:52px;height:52px;border-radius:8px;background:#111;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px}
     .meta{flex:1}
-    .meta h3{margin:0;font-size:15px}
-    .meta p{margin:0;color:var(--muted);font-size:13px}
+    .meta h3{font-size:14px;margin:0}
+    .meta p{margin:0;color:var(--muted);font-size:12px}
     .price{font-weight:700}
 
-    .actions{display:flex;align-items:center;gap:8px}
-    .qty-btn{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,0.05);background:transparent;color:#fff;cursor:pointer}
-    .qty{min-width:36px;text-align:center}
+    .actions{display:flex;align-items:center;gap:6px}
+    .qty-btn{width:30px;height:30px;border-radius:6px;border:1px solid rgba(255,255,255,0.05);background:transparent;color:#fff;cursor:pointer;font-size:16px}
+    .qty{min-width:28px;text-align:center;font-size:14px}
 
-    /* right: resumo */
-    .cart{background:linear-gradient(180deg,#0f0f0f,#0b0b0b);padding:16px;border-radius:14px;position:sticky;top:20px}
-    .cart h2{margin:0 0 8px 0}
-    .cart-list{max-height:320px;overflow:auto;margin-bottom:12px}
-    .cart-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.03)}
+    /* carrinho */
+    .cart{background:#101010;padding:12px;border-radius:12px}
+    .cart h2{font-size:16px;margin-bottom:6px}
+    .cart-list{max-height:220px;overflow:auto;margin-bottom:8px}
+    .cart-item{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed rgba(255,255,255,0.05);font-size:13px}
     .cart-item small{color:var(--muted)}
-    .totals{display:flex;justify-content:space-between;font-weight:700;margin-bottom:12px}
-    .cart-actions{display:flex;gap:8px}
-    button.btn{flex:1;padding:10px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
-    .btn.clear{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+    .totals{display:flex;justify-content:space-between;font-weight:700;margin-bottom:8px;font-size:15px}
+    .cart-actions{display:flex;gap:6px}
+    button.btn{flex:1;padding:8px;border-radius:8px;border:0;cursor:pointer;font-weight:700;font-size:14px}
+    .btn.clear{background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--muted)}
     .btn.checkout{background:var(--accent);color:#000}
 
     /* modal */
-    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:40}
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:40;padding:12px}
     .modal.show{display:flex}
-    .modal-card{background:#0e0e0e;padding:20px;border-radius:12px;max-width:420px;width:96%;text-align:center}
-    .modal-card img{max-width:260px;display:block;margin:12px auto}
-    .modal-card .close{margin-top:12px;padding:8px 12px;border-radius:8px;border:0;background:#222;color:#fff}
+    .modal-card{background:#0e0e0e;padding:16px;border-radius:10px;max-width:320px;width:100%;text-align:center}
+    .modal-card img{max-width:200px;width:100%;display:block;margin:10px auto}
+    .modal-card .close{margin-top:10px;padding:8px 10px;border-radius:6px;border:0;background:#222;color:#fff;font-size:14px}
 
-    /* footer */
-    footer{margin-top:18px;color:var(--muted);font-size:13px}
-
-    /* responsive */
-    @media(max-width:900px){
-      main{grid-template-columns:1fr}
-      .products{grid-template-columns:repeat(1,1fr)}
-      .cart{position:relative}
-    }
+    footer{margin-top:14px;color:var(--muted);font-size:12px;text-align:center}
   </style>
 </head>
 <body>
@@ -88,12 +78,9 @@
     <div class="brand">
       <div class="logo">BAR</div>
       <div>
-        <h1>Loja do Bar — Soma de Consumo</h1>
-        <p class="lead">Adicione itens, salve entre sessões e finalize via PIX</p>
+        <h1>Loja do Bar</h1>
+        <p class="lead">Adicione itens, salve e finalize via PIX</p>
       </div>
-    </div>
-    <div>
-      <small style="color:var(--muted)">Tema: Preto • Persistência: localStorage</small>
     </div>
   </header>
 
@@ -113,47 +100,41 @@
         </div>
         <div class="cart-actions">
           <button class="btn clear" id="clearBtn">Limpar</button>
-          <button class="btn checkout" id="checkoutBtn">Finalizar Compra</button>
+          <button class="btn checkout" id="checkoutBtn">Finalizar</button>
         </div>
       </div>
     </aside>
   </main>
 
   <footer>
-    <small>Coloque o arquivo <code>qrcode-pix.png</code> na mesma pasta do HTML para que o QR apareça ao finalizar a compra.</small>
+    <small>Coloque o arquivo <code>qrcode-pix.png</code> na mesma pasta para o QR aparecer.</small>
   </footer>
 
-  <!-- modal PIX -->
   <div class="modal" id="pixModal">
     <div class="modal-card">
       <h3>Escaneie para pagar (PIX)</h3>
       <p id="pixValue" style="margin:0;color:var(--muted)"></p>
       <img id="pixImg" src="qrcode-pix.png" alt="QR Code PIX" onerror="this.style.display='none'">
-      <p style="color:var(--muted);font-size:13px">Ou copie o valor e pague manualmente.</p>
+      <p style="color:var(--muted);font-size:12px">Ou copie o valor manualmente.</p>
       <button class="close" id="closeModalBtn">Fechar</button>
     </div>
   </div>
 
   <script>
-    // Produtos exemplo (edite conforme precisar)
     const PRODUCTS = [
       {id:'b1', category:'Bebidas', name:'Cerveja Lata', price:6.5},
       {id:'b2', category:'Bebidas', name:'Refrigerante 350ml', price:5.0},
-      {id:'b3', category:'Bebidas', name:'Caipirinha (copos)', price:12.0},
+      {id:'b3', category:'Bebidas', name:'Caipirinha', price:12.0},
       {id:'p1', category:'Petiscos', name:'Batata Frita', price:14.0},
       {id:'p2', category:'Petiscos', name:'Amendoim', price:6.0},
-      {id:'s1', category:'Sinuca', name:'Mesa (1 hora)', price:20.0},
+      {id:'s1', category:'Sinuca', name:'Mesa (1h)', price:20.0},
       {id:'s2', category:'Sinuca', name:'Tacada extra', price:3.5}
     ];
 
-    // Keys
     const LS_KEY = 'loja_bar_cart_v1';
-
-    // Estado
     let cart = loadCart();
     let currentCategory = 'Todos';
 
-    // DOM refs
     const productsGrid = document.getElementById('productsGrid');
     const categoryTabs = document.getElementById('categoryTabs');
     const cartList = document.getElementById('cartList');
@@ -163,25 +144,14 @@
     const pixModal = document.getElementById('pixModal');
     const pixValue = document.getElementById('pixValue');
     const closeModalBtn = document.getElementById('closeModalBtn');
-    const pixImg = document.getElementById('pixImg');
 
-    // Inicializar
     renderCategories();
     renderProducts();
     renderCart();
 
-    // --- persistence ---
-    function saveCart(){
-      try{ localStorage.setItem(LS_KEY, JSON.stringify(cart)); }catch(e){console.warn('Erro ao salvar localStorage', e)}
-    }
-    function loadCart(){
-      try{
-        const raw = localStorage.getItem(LS_KEY);
-        return raw ? JSON.parse(raw) : {};
-      }catch(e){return {}};
-    }
+    function saveCart(){ localStorage.setItem(LS_KEY, JSON.stringify(cart)); }
+    function loadCart(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)) || {}; }catch(e){return {}} }
 
-    // --- render categorias ---
     function renderCategories(){
       const cats = ['Todos', ...Array.from(new Set(PRODUCTS.map(p=>p.category)))];
       categoryTabs.innerHTML='';
@@ -194,7 +164,6 @@
       });
     }
 
-    // --- render produtos ---
     function renderProducts(){
       const filtered = currentCategory === 'Todos' ? PRODUCTS : PRODUCTS.filter(p=>p.category===currentCategory);
       productsGrid.innerHTML = '';
@@ -215,18 +184,16 @@
               <div class="qty" id="qty-${p.id}">${cart[p.id]||0}</div>
               <button class="qty-btn" data-action="increase" data-id="${p.id}">+</button>
             </div>
-            <div style="font-size:13px;color:var(--muted)">unit</div>
           </div>
         `;
         productsGrid.appendChild(el);
       });
 
-      // add listeners
       document.querySelectorAll('.qty-btn').forEach(b=>{
         b.addEventListener('click', (e)=>{
           const id = e.currentTarget.dataset.id;
           const act = e.currentTarget.dataset.action;
-          changeQty(id, act === 'increase' ? 1 : -1);
+          changeQty(id, act==='increase'?1:-1);
         });
       });
     }
@@ -241,7 +208,6 @@
       renderCart();
     }
 
-    // --- render carrinho ---
     function renderCart(){
       cartList.innerHTML = '';
       const items = Object.keys(cart).map(id=>{
@@ -258,59 +224,30 @@
         cartList.appendChild(row);
       });
 
-      const total = items.reduce((s,i)=>s + i.qty * i.product.price, 0);
+      const total = items.reduce((s,i)=>s+i.qty*i.product.price,0);
       totalAmount.textContent = formatCurrency(total);
     }
 
-    // formato BRL
-    function formatCurrency(v){
-      return new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v);
-    }
+    function formatCurrency(v){ return new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(v); }
 
-    // limpar carrinho
     clearBtn.addEventListener('click', ()=>{
       if(confirm('Deseja limpar todo o carrinho?')){
-        cart = {};
-        saveCart();
-        renderProducts();
-        renderCart();
+        cart = {}; saveCart(); renderProducts(); renderCart();
       }
     });
 
-    // finalizar compra
     checkoutBtn.addEventListener('click', ()=>{
       const total = Object.keys(cart).reduce((s,id)=>{
-        const p = PRODUCTS.find(x=>x.id===id); return s + (p ? p.price * cart[id] : 0);
+        const p = PRODUCTS.find(x=>x.id===id); return s+(p?p.price*cart[id]:0);
       },0);
-      if(total <= 0){ alert('Seu carrinho está vazio.'); return; }
+      if(total<=0){ alert('Seu carrinho está vazio.'); return; }
       pixValue.textContent = formatCurrency(total);
-      // show modal
       pixModal.classList.add('show');
-      // try to show image — image is expected at qrcode-pix.png
-      // If user wants dynamic qr generation, deve integrar API externa ou biblioteca.
     });
 
     closeModalBtn.addEventListener('click', ()=>{ pixModal.classList.remove('show'); });
-
-    // fechar modal com ESC ou clique no overlay
     pixModal.addEventListener('click', (e)=>{ if(e.target===pixModal) pixModal.classList.remove('show'); });
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') pixModal.classList.remove('show'); });
-
-    // -- útil: permite alterar produtos facilmente no topo PRODUCTS array --
-
-    // Export/Import simples (opcional) — copia o JSON do carrinho
-    // (voce pode remover essas funções se nao quiser)
-    function exportCart(){ return JSON.stringify(cart); }
-    function importCart(json){ try{ cart = JSON.parse(json)||{}; saveCart(); renderProducts(); renderCart(); }catch(e){alert('JSON inválido')} }
-
-    // Permitir clicar no total para copiar valor
-    totalAmount.addEventListener('click', ()=>{
-      const text = totalAmount.textContent || '';
-      navigator.clipboard?.writeText(text).then(()=>{
-        alert('Total copiado: ' + text);
-      }).catch(()=>{});
-    });
-
   </script>
 </body>
 </html>
