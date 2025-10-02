@@ -22,9 +22,7 @@
       padding:12px;
     }
 
-    header{
-      display:flex;flex-direction:column;gap:8px;margin-bottom:14px;
-    }
+    header{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
     .brand{display:flex;gap:10px;align-items:center}
     .logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,#222,#111);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:16px}
     h1{font-size:18px;line-height:1.2}
@@ -32,19 +30,13 @@
 
     main{display:flex;flex-direction:column;gap:14px}
 
-    /* barra de pesquisa */
     .search-box{margin:8px 0;}
-    .search-box input{
-      width:100%;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);
-      background:#111;color:#fff;font-size:14px;
-    }
+    .search-box input{width:100%;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:#111;color:#fff;font-size:14px;}
 
-    /* categorias */
     .controls{display:flex;gap:6px;flex-wrap:wrap;overflow-x:auto;padding-bottom:6px}
     .tab{background:var(--glass);padding:6px 10px;border-radius:999px;cursor:pointer;color:var(--muted);font-size:13px;flex-shrink:0;white-space:nowrap}
     .tab.active{background:linear-gradient(90deg,#222,#1a1a1a);color:#fff;box-shadow:0 3px 10px rgba(0,0,0,0.5)}
 
-    /* produtos */
     .products{display:grid;grid-template-columns:1fr;gap:10px}
     .product{background:var(--card);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px}
     .top{display:flex;gap:10px;align-items:center}
@@ -58,7 +50,6 @@
     .qty-btn{width:30px;height:30px;border-radius:6px;border:1px solid rgba(255,255,255,0.05);background:transparent;color:#fff;cursor:pointer;font-size:16px}
     .qty{min-width:28px;text-align:center;font-size:14px}
 
-    /* carrinho */
     .cart{background:#101010;padding:12px;border-radius:12px}
     .cart h2{font-size:16px;margin-bottom:6px}
     .cart-list{max-height:220px;overflow:auto;margin-bottom:8px}
@@ -70,7 +61,6 @@
     .btn.clear{background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--muted)}
     .btn.checkout{background:var(--accent);color:#000}
 
-    /* modal */
     .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:40;padding:12px}
     .modal.show{display:flex}
     .modal-card{background:#0e0e0e;padding:16px;border-radius:10px;max-width:320px;width:100%;text-align:center}
@@ -132,14 +122,27 @@
 
   <script>
     const PRODUCTS = [
-      {id:'b1', category:'Bebidas', name:'Cerveja Lata', price:5},
-      {id:'b2', category:'Bebidas', name:'Refrigerante Lata', price:5.0},
-      {id:'b3', category:'Bebidas', name:'Refrigerante Grande', price:11.0},
-      {id:'b4', category:'Bebidas', name:'La Frut 200ml', price:3.50},
-      {id:'b5', category:'Bebidas', name:'Para Tudo', price:7.0},
-      {id:'p1', category:'Petiscos', name:'Esquine', price:14.0},
-      {id:'p2', category:'Petiscos', name:'Amendoim', price:3.0},
-      {id:'s1', category:'Sinuca', name:'Sinuca Ficha', price:2},
+      {id:'s1', category:'Sinuca', name:'Ficha de Sinuca', price:2},
+      {id:'p1', category:'Petiscos', name:'Skiny Grande', price:3},
+      {id:'p2', category:'Petiscos', name:'Skiny de Pequeno', price:2.5},
+      {id:'p3', category:'Petiscos', name:'Esquine Explosal', price:2.5},
+      {id:'p4', category:'Petiscos', name:'Bacon Explosão', price:4},
+      {id:'p5', category:'Petiscos', name:'Petiscos Diversos', price:2},
+      {id:'b4', category:'Bebidas', name:'Coca-Cola 2L', price:12},
+      {id:'b5', category:'Bebidas', name:'Refrigerante Jaó 2L', price:8},
+      {id:'b6', category:'Bebidas', name:'Guaraná 1L', price:8},
+      {id:'b7', category:'Bebidas', name:'Coca-Cola Lata', price:5},
+      {id:'b8', category:'Bebidas', name:'Dose de Para Tudo', price:3},
+      {id:'b9', category:'Bebidas', name:'Energético Red Bull', price:10},
+      {id:'b10', category:'Bebidas', name:'Limoneto (1L/2L)', price:12},
+      {id:'b11', category:'Bebidas', name:'Água com Gás', price:3},
+      {id:'b12', category:'Bebidas', name:'Água sem Gás', price:2},
+      {id:'c1', category:'Cervejas', name:'Cerveja Long Neck Heineken', price:8},
+      {id:'c2', category:'Cervejas', name:'Cerveja Profissa (Antarctica/Brahma)', price:4.5},
+      {id:'c3', category:'Cervejas', name:'Cerveja Lata', price:5},
+      {id:'d1', category:'Doces', name:'chiclete', price:0.5},
+      {id:'d2', category:'Doces', name:'Pirulito', price:0.5},
+      {id:'d3', category:'Doces', name:'Picolé', price:1},
     ];
 
     const LS_KEY = 'loja_bar_cart_v1';
